@@ -1,0 +1,29 @@
+#   Initial example copied from:
+#   https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#workflow_dispatch
+name: _get-keys
+
+on: 
+  schedule:
+    - cron: "0 14 * * *"
+  workflow_dispatch:
+
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
+jobs:
+  get-organisation-keys:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+    - uses: actions/checkout@v2
+      with:
+        fetch-depth: '0'
+
+    - name: 'get all keys then push'
+      run: ./.github/workflows/getkeys.sh
+      env:
+        GH_PAT: ${{ secrets.GH_PAT_MEMBERS_LIST }}
+        REPO: ${{ github.repository }}
