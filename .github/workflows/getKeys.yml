@@ -25,5 +25,5 @@ jobs:
     - name: 'get all keys then push'
       run: ./.github/workflows/getkeys.sh
       env:
-        GH_PAT: ${{ secrets.GH_PAT_MEMBERS_LIST }}
+        GH_PAT: ${{ secrets.GH_PAT }}
         REPO: ${{ github.repository }}
